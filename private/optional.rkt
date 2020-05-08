@@ -8,6 +8,7 @@
  Optional
  optional? something?
  some none
+ optional-value
  optional-map/f optional-map/a optional-map/m
  optional-return optional-join
  begin/m-optional let/m-optional let/f-optional)
@@ -30,6 +31,12 @@
   (match x
     [(or (? none?) (? some?)) #t]
     [_ #f]))
+
+(: optional-value (∀ (a) ((Optional a) a . -> . a)))
+(define (optional-value mx default-value)
+  (match mx
+    [(some x) x]
+    [_ default-value]))
 
 (: optional-map/f (∀ (a b) ((a . -> . b) (Optional a) . -> . (Optional b))))
 (define (optional-map/f f mx)
@@ -105,13 +112,19 @@
      (safe-divide x 2))
    (none))
 
-  (let/f-optional ([x : Number (safe-divide 3 4)])
-    (sqr x))
+  (check-equal?
+   (let/f-optional ([x : Number (safe-divide 3 4)])
+     (sqr x))
+   (some 9/16))
 
   (check-equal?
    (let/f-optional ([x : Number (safe-divide 3 0)])
      (sqr x))
-   (none)))
+   (none))
+
+  (check-equal? (optional-value (some 'x) 'y) 'x)
+  (check-equal? (optional-value (none) 'y) 'y))
+
 
 
 

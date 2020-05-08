@@ -2,9 +2,8 @@
 @require[@for-label[optional
                     racket/base]]
 
-@title{optional}
-@author{sbj}
+@title{Optional Values}
+@author{@author+email["Samuel B. Johnson" "sabjohnso.dev@gmail.com"]}
 
-@defmodule[optional]
-
-Package Description Here
+@include-section["untyped.scrbl"]
+@include-section["typed.scrbl"]
